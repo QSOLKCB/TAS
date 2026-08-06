@@ -1139,6 +1139,7 @@ footer a {
 
 @media (min-width: 761px) {
   .canvas-shell {
+    min-height: 420px;
     flex: 0 0 clamp(420px, 58vh, 620px);
   }
 }
