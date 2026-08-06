@@ -574,19 +574,41 @@
     animationFrame = global.requestAnimationFrame(animate);
   }
 
+  function updateAnimationButton(button) {
+    byId("animate-icon").textContent = animating ? "■" : "▶";
+    byId("animate-label").textContent = animating ? "Stop field" : "Animate field";
+    button.setAttribute("aria-pressed", animating ? "true" : "false");
+  }
+
+  function preserveScrollAfterUpdate(update) {
+    const scrollX = global.scrollX;
+    const scrollY = global.scrollY;
+    update();
+    global.requestAnimationFrame(() => {
+      if (Math.abs(global.scrollX - scrollX) <= 1 && Math.abs(global.scrollY - scrollY) <= 1) return;
+      const root = document.documentElement;
+      const previousBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      global.scrollTo(scrollX, scrollY);
+      root.style.scrollBehavior = previousBehavior;
+    });
+  }
+
   function toggleAnimation() {
-    animating = !animating;
     const button = byId("animate-button");
-    if (animating) {
-      setView("instantaneous");
-      button.innerHTML = "<span aria-hidden=\"true\">■</span> Stop field";
-      animationStart = 0;
-      animationFrame = global.requestAnimationFrame(animate);
-    } else {
-      global.cancelAnimationFrame(animationFrame);
-      button.innerHTML = "<span aria-hidden=\"true\">▶</span> Animate field";
-      renderField(performance.now());
-    }
+    preserveScrollAfterUpdate(() => {
+      animating = !animating;
+      if (animating) {
+        setView("instantaneous");
+        animationStart = 0;
+        animationFrame = global.requestAnimationFrame(animate);
+      } else {
+        global.cancelAnimationFrame(animationFrame);
+        renderField(performance.now());
+      }
+      updateAnimationButton(button);
+      button.focus({ preventScroll: true });
+    });
   }
 
   async function toggleAudio() {

@@ -702,6 +702,10 @@ input[type="range"]::-moz-range-thumb {
   gap: 7px;
 }
 
+#animate-button {
+  min-width: 116px;
+}
+
 .transport p {
   max-width: 390px;
   margin: 0;
@@ -1131,6 +1135,13 @@ footer a {
   margin-left: 14px;
   color: var(--muted);
   text-decoration: none;
+}
+
+@media (min-width: 761px) {
+  .canvas-shell {
+    min-height: 420px;
+    flex: 0 0 clamp(420px, 58vh, 620px);
+  }
 }
 
 @media (max-width: 1280px) {
