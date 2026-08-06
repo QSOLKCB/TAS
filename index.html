@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07131d">
+  <meta name="description" content="TAS is an offline, non-clinical workbench for exploring phased-array acoustic fields and auditing the Topological Acoustic Stylus hypothesis.">
+  <meta property="og:title" content="TAS — Acoustic Field Research Workbench">
+  <meta property="og:description" content="Explore phased-array fields, audit the L39 hypothesis, and export deterministic experiments. Simulation only.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://qsolkcb.github.io/TAS/">
+  <meta property="og:image" content="https://qsolkcb.github.io/TAS/source/topological-acoustic-stylus-poster.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://qsolkcb.github.io/TAS/">
+  <title>TAS — Acoustic Field Research Workbench</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to workbench</a>
+
+  <header class="masthead">
+    <div class="brand-lockup" aria-label="Topological Acoustic Stylus">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div>
+        <p class="eyebrow">QSOL-IMC / OPEN RESEARCH INSTRUMENT</p>
+        <h1>TAS <span>Acoustic Field Workbench</span></h1>
+      </div>
+    </div>
+    <div class="masthead-actions">
+      <span class="status-pill"><i aria-hidden="true"></i> SIMULATION ONLY</span>
+      <a href="docs/CLAIMS.md" class="text-link">Claim ledger</a>
+      <a href="https://github.com/QSOLKCB/TAS" class="button button-quiet">GitHub</a>
+    </div>
+  </header>
+
+  <div class="safety-banner" role="note">
+    <strong>Not a medical device.</strong>
+    <span>This browser model cannot establish exposure safety, biological efficacy, treatment parameters, or patient suitability.</span>
+  </div>
+
+  <main id="workspace" class="workspace">
+    <aside class="control-rail" aria-label="Simulation controls">
+      <section class="panel intro-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">00 / EXPERIMENT</p>
+            <h2>Field configuration</h2>
+          </div>
+          <button id="reset-button" class="icon-button" type="button" title="Reset experiment" aria-label="Reset experiment">↺</button>
+        </div>
+
+        <label class="field field-wide" for="preset-select">
+          <span>Preset</span>
+          <select id="preset-select">
+            <option value="reference">Reference focus</option>
+            <option value="tas-l39">TAS L39 hypothesis</option>
+            <option value="interface">Interface conversion audit</option>
+            <option value="time-reversal">Heterogeneous delay proxy</option>
+          </select>
+        </label>
+
+        <div class="experiment-id">
+          <span>Fingerprint</span>
+          <code id="fingerprint">--------</code>
+        </div>
+      </section>
+
+      <section class="panel control-panel">
+        <button class="panel-toggle" type="button" aria-expanded="true" aria-controls="array-controls">
+          <span><b>01</b> Array & drive</span><i aria-hidden="true">−</i>
+        </button>
+        <div id="array-controls" class="panel-content">
+          <label class="field" for="elements-input">
+            <span>Elements <output id="elements-output">24</output></span>
+            <input id="elements-input" type="range" min="4" max="64" step="2" value="24">
+          </label>
+          <label class="field" for="frequency-input">
+            <span>Carrier <output id="frequency-output">0.50 MHz</output></span>
+            <input id="frequency-input" type="range" min="0.10" max="3.00" step="0.05" value="0.50">
+          </label>
+          <label class="field" for="aperture-input">
+            <span>Aperture <output id="aperture-output">80 mm</output></span>
+            <input id="aperture-input" type="range" min="20" max="140" step="2" value="80">
+          </label>
+          <label class="field" for="pressure-input">
+            <span>Reference peak pressure <output id="pressure-output">0.30 MPa</output></span>
+            <input id="pressure-input" type="range" min="0.02" max="2.50" step="0.01" value="0.30">
+          </label>
+          <label class="field" for="duty-input">
+            <span>Duty cycle <output id="duty-output">20%</output></span>
+            <input id="duty-input" type="range" min="1" max="100" step="1" value="20">
+          </label>
+          <label class="field" for="envelope-input">
+            <span>Envelope / refresh <output id="envelope-output">1.00 Hz</output></span>
+            <input id="envelope-input" type="range" min="0.10" max="20.00" step="0.10" value="1.00">
+          </label>
+        </div>
+      </section>
+
+      <section class="panel control-panel">
+        <button class="panel-toggle" type="button" aria-expanded="true" aria-controls="target-controls">
+          <span><b>02</b> Focus & phase</span><i aria-hidden="true">−</i>
+        </button>
+        <div id="target-controls" class="panel-content">
+          <label class="field" for="focus-x-input">
+            <span>Lateral focus <output id="focus-x-output">0 mm</output></span>
+            <input id="focus-x-input" type="range" min="-45" max="45" step="1" value="0">
+          </label>
+          <label class="field" for="focus-z-input">
+            <span>Focus depth <output id="focus-z-output">58 mm</output></span>
+            <input id="focus-z-input" type="range" min="15" max="110" step="1" value="58">
+          </label>
+          <label class="field" for="steering-input">
+            <span>Steering angle <output id="steering-output">0.00°</output></span>
+            <input id="steering-input" type="range" min="-65" max="65" step="0.01" value="0">
+          </label>
+          <label class="field field-wide" for="phase-select">
+            <span>Phase law</span>
+            <select id="phase-select">
+              <option value="focus">Homogeneous focus</option>
+              <option value="heterogeneous">Straight-ray heterogeneous delay</option>
+              <option value="plane">Steered plane wave</option>
+              <option value="golden">Golden-phase perturbation</option>
+            </select>
+          </label>
+          <label class="field" for="golden-input">
+            <span>Golden perturbation <output id="golden-output">0.00 turns</output></span>
+            <input id="golden-input" type="range" min="0" max="1" step="0.01" value="0">
+          </label>
+        </div>
+      </section>
+
+      <section class="panel control-panel">
+        <button class="panel-toggle" type="button" aria-expanded="true" aria-controls="medium-controls">
+          <span><b>03</b> Layered phantom</span><i aria-hidden="true">−</i>
+        </button>
+        <div id="medium-controls" class="panel-content two-column-fields">
+          <label class="field" for="medium-one-select">
+            <span>Upper layer</span>
+            <select id="medium-one-select">
+              <option value="water">Water</option>
+              <option value="soft" selected>Generic soft tissue</option>
+              <option value="fat">Fat</option>
+              <option value="muscle">Muscle</option>
+            </select>
+          </label>
+          <label class="field" for="medium-two-select">
+            <span>Lower layer</span>
+            <select id="medium-two-select">
+              <option value="water">Water</option>
+              <option value="soft">Generic soft tissue</option>
+              <option value="fat">Fat</option>
+              <option value="muscle" selected>Muscle</option>
+              <option value="bone">Cortical bone proxy</option>
+            </select>
+          </label>
+          <label class="field field-wide" for="interface-input">
+            <span>Interface depth <output id="interface-output">38 mm</output></span>
+            <input id="interface-input" type="range" min="12" max="100" step="1" value="38">
+          </label>
+          <label class="check-field field-wide" for="reflection-input">
+            <input id="reflection-input" type="checkbox" checked>
+            <span><b>First-order reflection</b><small>Normal-incidence fluid proxy</small></span>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel control-panel">
+        <button class="panel-toggle" type="button" aria-expanded="true" aria-controls="mode-controls">
+          <span><b>04</b> Modal hypothesis</span><i aria-hidden="true">−</i>
+        </button>
+        <div id="mode-controls" class="panel-content">
+          <label class="field" for="mode-rank-input">
+            <span>Rectangular mode rank <output id="mode-rank-output">L39</output></span>
+            <input id="mode-rank-input" type="range" min="1" max="96" step="1" value="39">
+          </label>
+          <div class="mini-metrics">
+            <div><span>Resolved pair</span><strong id="mode-pair">(5, 4)</strong></div>
+            <div><span>Modal proxy</span><strong id="mode-frequency">—</strong></div>
+          </div>
+          <label class="check-field" for="mode-overlay-input">
+            <input id="mode-overlay-input" type="checkbox" checked>
+            <span><b>Show nodal target</b><small>Mathematical cavity overlay only</small></span>
+          </label>
+          <p class="field-note">“L39” is treated as the 39th mode of this declared 2D rectangular cavity. No standard biological L39 mode was found.</p>
+        </div>
+      </section>
+
+      <section class="panel equation-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">05 / SOURCE EQUATION AUDIT</p>
+            <h2>Does the paper derive its bands?</h2>
+          </div>
+          <span class="audit-chip">LIVE</span>
+        </div>
+        <label class="field field-wide" for="sdmt-tissue-select">
+          <span>White Paper 83 tissue stratum</span>
+          <select id="sdmt-tissue-select">
+            <option value="0">Bone / cartilage · k=18</option>
+            <option value="1">Muscle · k=25</option>
+            <option value="2">Fascia / tendon · k=30</option>
+            <option value="3">Epidermis / dermis · k=35</option>
+          </select>
+        </label>
+        <code class="source-equation">f<sub>k</sub> ≈ 8<sup>39−k</sup> Hz</code>
+        <div class="audit-grid">
+          <div><span>Claimed band</span><strong id="sdmt-claimed">1–5 MHz</strong></div>
+          <div><span>Inverse octave</span><strong id="sdmt-cascade">—</strong></div>
+          <div><span>Music Tree f<sub>n,1</sub></span><strong id="sdmt-tree">—</strong></div>
+          <div><span>Nearest ratio</span><strong id="sdmt-ratio">—</strong></div>
+        </div>
+        <div class="callout callout-audit">
+          <b id="sdmt-verdict">Additional normalization required</b>
+          <span>The printed equations do not reproduce this table row from f₀ = 1 Hz without another scale or mapping.</span>
+        </div>
+      </section>
+    </aside>
+
+    <section class="stage" aria-label="Acoustic field visualisation">
+      <div class="stage-toolbar">
+        <div class="view-tabs" role="group" aria-label="Field view">
+          <button class="view-tab active" type="button" data-view="amplitude">Amplitude</button>
+          <button class="view-tab" type="button" data-view="intensity">Intensity</button>
+          <button class="view-tab" type="button" data-view="phase">Phase</button>
+          <button class="view-tab" type="button" data-view="instantaneous">Wave</button>
+          <button class="view-tab" type="button" data-view="target">L-mode</button>
+          <button class="view-tab" type="button" data-view="error">Error</button>
+        </div>
+        <div class="stage-readout">
+          <span id="cursor-readout">x 0.0 · z 0.0 mm</span>
+          <span id="field-readout">|p| 0.000</span>
+        </div>
+      </div>
+
+      <div class="canvas-shell">
+        <canvas id="field-canvas" width="960" height="620" aria-label="Simulated two-dimensional acoustic pressure field"></canvas>
+        <div class="canvas-legend" aria-hidden="true">
+          <span id="legend-high">antinodal</span>
+          <i></i>
+          <span id="legend-low">node</span>
+        </div>
+        <div id="computing-indicator" class="computing-indicator" aria-live="polite">SOLVING FIELD…</div>
+      </div>
+
+      <div class="transport">
+        <div class="transport-buttons">
+          <button id="animate-button" class="button button-primary" type="button"><span aria-hidden="true">▶</span> Animate field</button>
+          <button id="listen-button" class="button" type="button"><span aria-hidden="true">◉</span> Listen to mapping</button>
+          <button id="wav-button" class="button" type="button">Render WAV</button>
+        </div>
+        <p><strong>Audio is a heterodyned parameter mapping.</strong> It is not a recording of ultrasound or a biological response.</p>
+      </div>
+
+      <section class="protocol-strip" aria-labelledby="protocol-title">
+        <div class="protocol-heading">
+          <div>
+            <p class="section-number">TAS TRANSLATION</p>
+            <h2 id="protocol-title">Six-phase research protocol</h2>
+          </div>
+          <span>Concept → testable workflow</span>
+        </div>
+        <ol>
+          <li class="complete"><b>1</b><span>Map<small>Declare phantom geometry</small></span></li>
+          <li class="active"><b>2</b><span>Align<small>Set array and target</small></span></li>
+          <li><b>3</b><span>Solve<small>Compute phase law</small></span></li>
+          <li><b>4</b><span>Simulate<small>Render pressure field</small></span></li>
+          <li><b>5</b><span>Audit<small>Compare claims and metrics</small></span></li>
+          <li><b>6</b><span>Export<small>Preserve reproducible state</small></span></li>
+        </ol>
+      </section>
+    </section>
+
+    <aside class="analysis-rail" aria-label="Metrics and evidence">
+      <section class="panel metric-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">LIVE / DERIVED</p>
+            <h2>Field metrics</h2>
+          </div>
+          <span id="model-status" class="model-chip">LINEAR</span>
+        </div>
+        <div class="metric-grid">
+          <article>
+            <span>Wavelength</span>
+            <strong id="wavelength-metric">3.08 <small>mm</small></strong>
+            <i class="metric-rule"><b id="wavelength-bar"></b></i>
+          </article>
+          <article>
+            <span>Focus ratio</span>
+            <strong id="focus-ratio-metric">—</strong>
+            <i class="metric-rule"><b id="focus-ratio-bar"></b></i>
+          </article>
+          <article>
+            <span>L-mode overlap</span>
+            <strong id="overlap-metric">—</strong>
+            <i class="metric-rule"><b id="overlap-bar"></b></i>
+          </article>
+          <article>
+            <span>Intensity reflectance</span>
+            <strong id="reflectance-metric">—</strong>
+            <i class="metric-rule"><b id="reflectance-bar"></b></i>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel exposure-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">SCREENING / INCOMPLETE</p>
+            <h2>Exposure context</h2>
+          </div>
+          <button id="exposure-info" class="icon-button" type="button" title="About exposure metrics" aria-label="About exposure metrics">i</button>
+        </div>
+        <div class="exposure-readout">
+          <div class="gauge" id="mi-gauge" style="--value: 0">
+            <span><strong id="mi-metric">0.00</strong><small>MI proxy</small></span>
+          </div>
+          <div class="exposure-values">
+            <div><span>Derated p<sub>r.3</sub></span><strong id="derated-pressure-metric">—</strong></div>
+            <div><span>I<sub>SPTA</sub> proxy</span><strong id="ispta-metric">—</strong></div>
+            <div><span>Temperature</span><strong>not solved</strong></div>
+          </div>
+        </div>
+        <div id="exposure-warning" class="callout callout-warning">
+          <b>Incomplete dosimetry</b>
+          <span>Hydrophone calibration, nonlinear propagation, tissue heating, cavitation nuclei, scan path, and 3D anatomy are absent.</span>
+        </div>
+      </section>
+
+      <section class="panel evidence-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">EVIDENCE / CLAIM LEDGER</p>
+            <h2>What survives contact with physics?</h2>
+          </div>
+        </div>
+        <div class="evidence-summary" aria-label="Claim classification totals">
+          <div><b>4</b><span>Established</span></div>
+          <div><b>2</b><span>Experimental</span></div>
+          <div><b>6</b><span>Unsubstantiated</span></div>
+        </div>
+        <div id="claim-list" class="claim-list">
+          <button type="button" data-claim="phased-array">
+            <i class="claim-state established"></i><span><b>Phased-array focusing</b><small>Established acoustic engineering</small></span><em>›</em>
+          </button>
+          <button type="button" data-claim="mode-conversion">
+            <i class="claim-state established"></i><span><b>Shear-wave generation</b><small>Established; proposed mechanism differs</small></span><em>›</em>
+          </button>
+          <button type="button" data-claim="piezo">
+            <i class="claim-state experimental"></i><span><b>PIEZO1 response</b><small>Experimental models; no regeneration inference</small></span><em>›</em>
+          </button>
+          <button type="button" data-claim="angle">
+            <i class="claim-state unsupported"></i><span><b>Universal 55.17° angle</b><small>No accepted derivation identified</small></span><em>›</em>
+          </button>
+          <button type="button" data-claim="l39">
+            <i class="claim-state unsupported"></i><span><b>Biological L39 mode</b><small>Undefined until geometry and boundary conditions exist</small></span><em>›</em>
+          </button>
+          <button type="button" data-claim="refresh">
+            <i class="claim-state unsupported"></i><span><b>1 Hz regenerative refresh</b><small>No efficacy evidence identified</small></span><em>›</em>
+          </button>
+        </div>
+        <button id="ledger-button" class="button button-wide" type="button">Open full evidence ledger</button>
+      </section>
+
+      <section class="panel export-panel">
+        <div>
+          <p class="section-number">REPRODUCIBILITY</p>
+          <h2>Preserve the experiment</h2>
+          <p>Export every declared input, derived metric, model limitation, and deterministic fingerprint.</p>
+        </div>
+        <div class="export-actions">
+          <button id="export-button" class="button button-primary" type="button">Export JSON</button>
+          <label class="button file-button" for="import-input">Import JSON<input id="import-input" type="file" accept="application/json,.json"></label>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="claim-dialog" class="dialog">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close">×</button>
+    </form>
+    <p id="dialog-classification" class="dialog-classification">CLASSIFICATION</p>
+    <h2 id="dialog-title">Claim</h2>
+    <div id="dialog-body"></div>
+    <div id="dialog-source" class="dialog-source"></div>
+  </dialog>
+
+  <noscript>
+    <div class="noscript">TAS needs JavaScript to calculate and display the acoustic field. No network connection is required.</div>
+  </noscript>
+
+  <footer>
+    <p>TAS v0.1.0 · Deterministic browser simulation · MPL-2.0</p>
+    <p><a href="docs/MODEL.md">Model</a><a href="docs/SAFETY.md">Safety boundary</a><a href="docs/SOURCES.md">Sources</a></p>
+  </footer>
+
+  <script src="js/physics.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

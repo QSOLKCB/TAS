@@ -1,0 +1,31 @@
+{
+  "schema": "https://qsolkcb.github.io/TAS/schema/experiment-v1.json",
+  "schemaVersion": 1,
+  "application": {
+    "name": "TAS Acoustic Field Workbench",
+    "version": "0.1.0"
+  },
+  "name": "Reference focus",
+  "simulation": {
+    "elements": 24,
+    "frequencyMHz": 0.5,
+    "apertureMm": 80,
+    "referencePressureMpa": 0.3,
+    "dutyCycle": 0.2,
+    "envelopeHz": 1,
+    "focusXmm": 0,
+    "focusZmm": 58,
+    "steeringDeg": 0,
+    "phaseLaw": "focus",
+    "goldenStrength": 0,
+    "mediumOne": "soft",
+    "mediumTwo": "muscle",
+    "interfaceDepthMm": 38,
+    "includeReflection": true,
+    "modeRank": 39,
+    "fieldWidthMm": 120,
+    "fieldDepthMm": 120,
+    "gridWidth": 180,
+    "gridHeight": 180
+  }
+}

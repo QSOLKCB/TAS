@@ -1,0 +1,36 @@
+name: Validate TAS
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Physics, audio, and offline-site checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Report bundled runtimes
+        run: |
+          node --version
+          python3 --version
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check js/physics.js
+          node --check js/audio.js
+          node --check js/app.js
+
+      - name: Run deterministic model tests
+        run: node --test tests/*.test.cjs
+
+      - name: Verify offline structure and source integrity
+        run: python3 tests/static_check.py
+

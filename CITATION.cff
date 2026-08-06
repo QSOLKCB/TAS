@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use the TAS workbench, cite this software and distinguish it from the supplied AMENRA S-DMT concept documents."
+title: "TAS: Topological Acoustic Stylus Research Workbench"
+type: software
+version: 0.1.0
+date-released: 2026-08-06
+authors:
+  - family-names: Slade
+    given-names: Trent
+    affiliation: QSOL-IMC
+    website: "https://github.com/QSOLKCB"
+  - family-names: Dumont
+    given-names: Robert
+    affiliation: AMENRA S-DMT Collective
+    website: "https://x.com/Voltardark"
+repository-code: "https://github.com/QSOLKCB/TAS"
+url: "https://qsolkcb.github.io/TAS/"
+license: MPL-2.0
+abstract: >-
+  An offline deterministic acoustic-field simulator and evidence-audit
+  workbench that translates the Topological Acoustic Stylus proposal into
+  explicit phased-array equations, testable proxies, reproducible exports,
+  and a non-clinical safety boundary.
+keywords:
+  - ultrasound
+  - phased array
+  - acoustic field
+  - sonification
+  - reproducible simulation
+  - hypothesis audit
+

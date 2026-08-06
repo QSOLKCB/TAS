@@ -1,0 +1,37 @@
+{
+  "schema": "https://qsolkcb.github.io/TAS/schema/experiment-v1.json",
+  "schemaVersion": 1,
+  "application": {
+    "name": "TAS Acoustic Field Workbench",
+    "version": "0.1.0"
+  },
+  "name": "TAS L39 hypothesis — source values preserved as variables",
+  "simulation": {
+    "elements": 24,
+    "frequencyMHz": 0.5,
+    "apertureMm": 80,
+    "referencePressureMpa": 0.3,
+    "dutyCycle": 0.2,
+    "envelopeHz": 1,
+    "focusXmm": 0,
+    "focusZmm": 62,
+    "steeringDeg": 55.17,
+    "phaseLaw": "golden",
+    "goldenStrength": 0.39,
+    "mediumOne": "soft",
+    "mediumTwo": "muscle",
+    "interfaceDepthMm": 42,
+    "includeReflection": true,
+    "modeRank": 39,
+    "fieldWidthMm": 120,
+    "fieldDepthMm": 120,
+    "gridWidth": 180,
+    "gridHeight": 180
+  },
+  "interpretation": {
+    "55.17 degrees": "declared White Paper 83 comparison angle, not a validated zero-reflection angle",
+    "1 Hz": "declared envelope comparison, not a validated regenerative constant",
+    "L39": "39th 2D rectangular Dirichlet scalar mode in TAS",
+    "golden phase": "deterministic perturbation proxy; source morphology term S_i is undefined"
+  }
+}
